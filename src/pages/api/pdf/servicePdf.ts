@@ -1,7 +1,10 @@
 import puppeteer from "puppeteer";
 import chromeLambda from "chrome-aws-lambda";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL_DEV = "http://localhost:3000";
+
+const pdfUrl =
+  process.env.NODE_ENV === "production" ? "https://your.app/pdf" : BASE_URL_DEV;
 
 export const generatorPDf = async (pathname: string) => {
   const browser = await puppeteer.launch({
@@ -10,13 +13,32 @@ export const generatorPDf = async (pathname: string) => {
     handleSIGINT: false,
     ignoreDefaultArgs: ["--disable-extensions"],
     defaultViewport: chromeLambda.defaultViewport,
-    executablePath: await chromeLambda.executablePath,
-    headless: chromeLambda.headless,
-    args: [...chromeLambda.args],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? await chromeLambda.executablePath
+        : "/usr/bin/google-chrome-stable",
+    headless:
+      process.env.NODE_ENV === "production" ? chromeLambda.headless : true,
+    args: [
+      ...chromeLambda.args,
+      "--font-render-hinting=none",
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--font-render-hinting=none",
+      "--disable-gpu",
+      "--disable-web-security",
+      "--disable-dev-profile",
+      "--single-process",
+      "--disable-dev-shm-usage",
+      "--disable-accelerated-2d-canvas",
+      "--no-first-run",
+      "--no-zygote",
+      "--use-gl=egl"
+    ],
   });
   try {
     const page = await browser.newPage();
-    await page.goto(`${BASE_URL}/${pathname}`, {
+    await page.goto(`${pdfUrl}/${pathname}`, {
       waitUntil: ["domcontentloaded", "load", "networkidle2"],
     });
     await page.emulateMediaType("screen");
