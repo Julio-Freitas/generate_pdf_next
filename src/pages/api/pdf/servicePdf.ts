@@ -2,9 +2,11 @@ import puppeteer from "puppeteer";
 import chromeLambda from "chrome-aws-lambda";
 
 const BASE_URL_DEV = "http://localhost:3000";
+const BASE_URL_PROD = "https://generate-pdf-next-nm5z.vercel.app"
+
 
 const pdfUrl =
-  process.env.NODE_ENV === "production" ? "https://your.app/pdf" : BASE_URL_DEV;
+  process.env.NODE_ENV === "production" ? BASE_URL_PROD : BASE_URL_DEV;
 
 export const generatorPDf = async (pathname: string) => {
   const browser = await puppeteer.launch({
