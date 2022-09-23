@@ -16,6 +16,7 @@ You can download the page clicking in the link "
 
 ## Routes
  GET -> You can download in the '/profiler'
+
  POST - > you can use the postman or one platform you prefer, in  the body request it is need send json those data
  ```
     {
