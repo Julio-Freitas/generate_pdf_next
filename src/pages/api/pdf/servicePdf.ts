@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-const BASE_URL = "https://generate-pdf-next-nm5z.vercel.app";
+const BASE_URL_PROD = "https://generate-pdf-next-nm5z.vercel.app";
 
 export const generatorPDf = async (pathname: string) => {
   const browser = await puppeteer.launch({
@@ -25,7 +25,7 @@ export const generatorPDf = async (pathname: string) => {
   });
   try {
     const page = await browser.newPage();
-    await page.goto(`${BASE_URL}/${pathname}`, {
+    await page.goto(`${BASE_URL_PROD}/${pathname}`, {
       waitUntil: ["domcontentloaded", "load", "networkidle2"],
     });
     await page.emulateMediaType("screen");
