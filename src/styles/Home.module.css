@@ -2,6 +2,17 @@
   padding: 40px;
 }
 
+.link {
+  padding: 6px 20px;
+  background-color: cadetblue;
+  color: #fff;
+  border-radius: 3px;
+  transition: all .5s;
+}
+.link:hover {
+  filter: drop-shadow(1px 2px 4px #fff) invert(15%);
+}
+
 @media print {
   .button_print {
     display: none;
