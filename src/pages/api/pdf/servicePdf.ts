@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
-const BASE_URL = "http://localhost:3000";
+
+const BASE_URL = "https://generate-pdf-next-nm5z.vercel.app";
 
 export const generatorPDf = async (pathname: string) => {
   const browser = await puppeteer.launch({
