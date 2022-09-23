@@ -1,0 +1,15 @@
+.container {
+  padding: 40px;
+}
+
+@media print {
+  .button_print {
+    display: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
