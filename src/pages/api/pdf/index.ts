@@ -7,6 +7,8 @@ export default async function PDF(
 ) {
   const { method, body } = req;
   const pdf = await generatorPDf(body.pathName || 'profiler');
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", "attachment; filename=reports.pdf");
   if (method === "POST" && body.pathName) {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Content-Disposition", "attachment; filename=reports.pdf");
