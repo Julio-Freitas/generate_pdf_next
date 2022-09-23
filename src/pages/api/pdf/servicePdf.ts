@@ -1,31 +1,22 @@
 import puppeteer from "puppeteer";
+import chromeLambda from "chrome-aws-lambda";
 
-const BASE_URL_PROD = "https://generate-pdf-next-nm5z.vercel.app";
+const BASE_URL = "http://localhost:3000";
 
 export const generatorPDf = async (pathname: string) => {
   const browser = await puppeteer.launch({
-    headless: true,
     ignoreHTTPSErrors: true,
     devtools: false,
     handleSIGINT: false,
     ignoreDefaultArgs: ["--disable-extensions"],
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--font-render-hinting=none",
-      "--disable-gpu",
-      "--disable-web-security",
-      "--disable-dev-profile",
-      "--single-process",
-      "--disable-dev-shm-usage",
-      "--disable-accelerated-2d-canvas",
-      "--no-first-run",
-      "--no-zygote",
-    ],
+    defaultViewport: chromeLambda.defaultViewport,
+    executablePath: await chromeLambda.executablePath,
+    headless: chromeLambda.headless,
+    args: [...chromeLambda.args],
   });
   try {
     const page = await browser.newPage();
-    await page.goto(`${BASE_URL_PROD}/${pathname}`, {
+    await page.goto(`${BASE_URL}/${pathname}`, {
       waitUntil: ["domcontentloaded", "load", "networkidle2"],
     });
     await page.emulateMediaType("screen");

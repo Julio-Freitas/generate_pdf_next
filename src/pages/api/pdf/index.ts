@@ -13,5 +13,5 @@ export default async function PDF(
     return res.send(pdf);
   }
 
-  return res.send({pdf: 'pdf'});
+  return res.send(pdf);
 }
