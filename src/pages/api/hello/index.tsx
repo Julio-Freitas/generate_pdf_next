@@ -9,6 +9,6 @@ export default async function PDF(
 
 
   return res.send({
-    msg: 'Hellow'
+    msg: JSON.stringify(process.env)
   });
 }
