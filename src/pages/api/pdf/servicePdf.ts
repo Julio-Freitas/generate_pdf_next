@@ -28,12 +28,33 @@ export async function getOptions() {
       args: [],
       executablePath: exePath,
       headless: true,
+      handleSIGINT: false,
+      devtools: false,
+      ignoreDefaultArgs: ["--disable-extensions"],
+      ignoreHTTPSErrors: true,
     };
   } else {
     options = {
-      args: chromeLambda.args,
+      args: [
+        ...chromeLambda.args,
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--font-render-hinting=none",
+        "--disable-gpu",
+        "--disable-web-security",
+        "--disable-dev-profile",
+        "--single-process",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+      ],
       executablePath: await chromeLambda.executablePath,
       headless: chromeLambda.headless,
+      handleSIGINT: false,
+      devtools: false,
+      ignoreDefaultArgs: ["--disable-extensions"],
+      ignoreHTTPSErrors: true,
     };
   }
 
