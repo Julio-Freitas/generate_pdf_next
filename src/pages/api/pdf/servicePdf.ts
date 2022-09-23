@@ -24,7 +24,6 @@ export const generatorPDf = async (pathname: string) => {
   });
   try {
     const page = await browser.newPage();
-
     await page.goto(`${BASE_URL}/${pathname}`, {
       waitUntil: ["domcontentloaded", "load", "networkidle2"],
     });

@@ -6,8 +6,7 @@ export default async function PDF(
   res: NextApiResponse<any>
 ) {
   const { method, body } = req;
-
-  const pdf = await generatorPDf('/profiler');
+  const pdf = await generatorPDf(body.pathName || 'profiler');
   if (method === "POST" && body.pathName) {
 
     res.setHeader("Content-Type", "application/pdf");

@@ -1,19 +1,19 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-
+import Link from "next/link";
 
 import { getProfiler } from "../../lib/profilers";
 import styles from "../../styles/Home.module.css";
 import { APi } from "../api/profilers/types";
 
-const StyleLI: React.CSSProperties= {
+const StyleLI: React.CSSProperties = {
   display: "flex",
   gap: "10px",
   flexDirection: "column",
   borderBottom: "1px solid #ccc",
   paddingBottom: "5px",
-}
-const StyleUL = { listStyle: "none" }
+};
+const StyleUL = { listStyle: "none" };
 
 const Home = ({ data }: APi) => {
   return (
@@ -27,9 +27,7 @@ const Home = ({ data }: APi) => {
 
       {data.map((item) => (
         <ul key={item.id} style={StyleUL}>
-          <li
-            style={StyleLI}
-          >
+          <li style={StyleLI}>
             <label>
               Nome: <strong>{item.name}</strong>{" "}
             </label>
@@ -37,10 +35,19 @@ const Home = ({ data }: APi) => {
             <label>
               Profiler: <strong>{item.profiler}</strong>{" "}
             </label>
+            <Link href={`/api/pdf/${item.id}`} download="generated_pdf.pdf">
+              <a className={styles.button_print}>Download</a>
+            </Link>
           </li>
         </ul>
       ))}
-      <a href="/api/pdf" download="generated_pdf.pdf" className={styles.button_print} >Download PDF</a>
+      <a
+        href="/api/pdf"
+        download="generated_pdf.pdf"
+        className={styles.button_print}
+      >
+        Download All page
+      </a>
     </div>
   );
 };
